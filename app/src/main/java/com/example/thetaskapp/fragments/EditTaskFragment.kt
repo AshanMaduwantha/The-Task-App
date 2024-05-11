@@ -59,6 +59,7 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
             if(taskTitle.isNotEmpty()){
                 val task = Task(currentTask.id, taskTitle, taskDesc)
                 taskViewModel.updateTask(task)
+                Toast.makeText(context, "Task Changed!", Toast.LENGTH_SHORT).show()
                 view.findNavController().popBackStack(R.id.homeFragment, false)
             }else{
                 Toast.makeText(context, "Please enter title!", Toast.LENGTH_SHORT).show()
