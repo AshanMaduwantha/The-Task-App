@@ -20,7 +20,7 @@
             android:fontFamily="@font/poppins"
             android:text="@string/add_task"
             android:textStyle="bold"
-            android:textColor="@color/red"
+            android:textColor="@color/PrimaryColor"
             android:textSize="24sp" />
 
         <EditText
@@ -31,7 +31,7 @@
             android:padding="12dp"
             android:textSize="20sp"
             android:layout_below="@id/addNoteHeading"
-            android:background="@drawable/pink_border"
+            android:background="@drawable/blue_border"
             android:layout_marginTop="16dp"
             android:maxLines="1"
             android:fontFamily="@font/poppins"/>
@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/addTaskTitle"
             android:layout_marginTop="12dp"
-            android:background="@drawable/pink_border"
+            android:background="@drawable/blue_border"
             android:fontFamily="@font/poppins"
             android:gravity="top"
             android:hint="@string/enter_the_description"
