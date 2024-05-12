@@ -39,7 +39,7 @@
         <EditText
             android:id="@+id/addNoteDesc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/addTaskTitle"
             android:layout_marginTop="12dp"
             android:background="@drawable/blue_border"
@@ -48,6 +48,40 @@
             android:hint="@string/enter_the_description"
             android:padding="12dp"
             android:textSize="18sp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/addNoteDesc"
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true">
+
+            <RadioButton
+                android:id="@+id/lowPriorityRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/low"
+                android:checked="true"
+                android:fontFamily="@font/poppins"/>
+
+            <RadioButton
+                android:id="@+id/mediumPriorityRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/medium"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"/>
+
+            <RadioButton
+                android:id="@+id/highPriorityRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/high"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"/>
+        </RadioGroup>
 
     </RelativeLayout>
 </layout>

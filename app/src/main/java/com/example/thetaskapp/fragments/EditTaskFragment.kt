@@ -33,6 +33,8 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
     // Current task to be edited
     private lateinit var currentTask: Task
 
+    private var selectedPriority: Int = -1
+
     // Arguments passed to the fragment
     private val args: EditTaskFragmentArgs by navArgs()
 
@@ -64,13 +66,29 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
         binding.editTaskTitle.setText(currentTask.taskTitle)
         binding.editTaskDesc.setText(currentTask.taskDesc)
 
+        when (currentTask.priority) {
+            1 -> binding.highPriorityRadioButton.isChecked = true
+            2 -> binding.mediumPriorityRadioButton.isChecked = true
+            3 -> binding.lowPriorityRadioButton.isChecked = true
+            else -> {-1}
+        }
+
+        binding.priorityRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            selectedPriority = when (checkedId) {
+                R.id.highPriorityRadioButton -> 1
+                R.id.mediumPriorityRadioButton -> 2
+                R.id.lowPriorityRadioButton -> 3
+                else -> {-1}
+            }
+        }
+
         // Updating task when FAB is clicked
         binding.editTaskFab.setOnClickListener{
             val taskTitle = binding.editTaskTitle.text.toString().trim()
             val taskDesc = binding.editTaskDesc.text.toString().trim()
 
             if(taskTitle.isNotEmpty()){
-                val task = Task(currentTask.id, taskTitle, taskDesc)
+                val task = Task(currentTask.id, taskTitle, taskDesc, selectedPriority)
                 taskViewModel.updateTask(task)
                 Toast.makeText(context, "Task Changed!", Toast.LENGTH_SHORT).show()
                 view.findNavController().popBackStack(R.id.homeFragment, false)

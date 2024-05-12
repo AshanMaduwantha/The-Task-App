@@ -19,7 +19,8 @@ class TaskAdapter: RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
             return oldItem.id == newItem.id &&
                     oldItem.taskDesc == newItem.taskDesc &&
-                    oldItem.taskTitle == newItem.taskTitle
+                    oldItem.taskTitle == newItem.taskTitle &&
+                    oldItem.priority == newItem.priority
         }
 
         override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {

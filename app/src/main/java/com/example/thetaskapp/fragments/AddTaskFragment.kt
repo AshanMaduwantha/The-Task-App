@@ -28,6 +28,8 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
     // ViewModel for managing tasks
     private lateinit var taskViewModel: TaskViewModel
 
+    private var selectedPriority: Int = -1
+
     // View for the fragment
     private lateinit var addTaskView: View
 
@@ -54,6 +56,14 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
 
         // Setting the view
         addTaskView = view
+
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.highPriorityRadioButton -> selectedPriority = 1
+                R.id.mediumPriorityRadioButton -> selectedPriority = 2
+                R.id.lowPriorityRadioButton -> selectedPriority = 3
+            }
+        }
     }
 
     // Function to save the task
@@ -62,7 +72,7 @@ class AddTaskFragment : Fragment(R.layout.fragment_add_task), MenuProvider {
         val taskDesc = binding.addNoteDesc.text.toString().trim()
 
         if(taskTitle.isNotEmpty()){
-            val task = Task(0, taskTitle, taskDesc)
+            val task = Task(0, taskTitle, taskDesc, selectedPriority)
             taskViewModel.addTask(task)
 
             Toast.makeText(addTaskView.context, "Task Saved!", Toast.LENGTH_SHORT).show()

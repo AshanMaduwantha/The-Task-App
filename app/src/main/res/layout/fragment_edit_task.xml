@@ -19,50 +19,84 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
             android:text="@string/edit_task"
-            android:textStyle="bold"
             android:textColor="@color/PrimaryColor"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="@string/enter_the_title"
-            android:padding="12dp"
-            android:textSize="20sp"
             android:layout_below="@id/editNoteHeading"
-            android:background="@drawable/blue_border"
             android:layout_marginTop="16dp"
+            android:background="@drawable/blue_border"
+            android:fontFamily="@font/poppins"
+            android:hint="@string/enter_the_title"
             android:maxLines="1"
-            android:fontFamily="@font/poppins"/>
+            android:padding="12dp"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTaskDesc"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/enter_the_description"
-            android:gravity="top"
-            android:padding="12dp"
-            android:textSize="18sp"
-            android:fontFamily="@font/poppins"
-            android:background="@drawable/blue_border"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/editTaskTitle"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/blue_border"
+            android:fontFamily="@font/poppins"
+            android:gravity="top"
+            android:hint="@string/enter_the_description"
+            android:padding="12dp"
+            android:textSize="18sp" />
+
+        <RadioGroup
+            android:id="@+id/priorityRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTaskDesc"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/lowPriorityRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/poppins"
+                android:text="@string/low" />
+
+            <RadioButton
+                android:id="@+id/mediumPriorityRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/medium" />
+
+            <RadioButton
+                android:id="@+id/highPriorityRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/high" />
+        </RadioGroup>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editTaskFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:clickable="true"
             android:backgroundTint="@color/PrimaryColor"
-            android:tintMode="@color/white"
-            android:src="@drawable/baseline_done_24"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
+            android:clickable="true"
             android:contentDescription="@string/editfab"
-            android:focusable="true" />
+            android:focusable="true"
+            android:src="@drawable/baseline_done_24"
+            android:tintMode="@color/white" />
 
     </RelativeLayout>
 </layout>
