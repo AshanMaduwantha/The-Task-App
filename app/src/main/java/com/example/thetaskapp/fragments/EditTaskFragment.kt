@@ -23,35 +23,48 @@ import com.example.thetaskapp.viewmodel.TaskViewModel
 
 class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
 
+    // View binding for the fragment
     private var editTaskBinding: FragmentEditTaskBinding? = null
     private val binding get() = editTaskBinding!!
 
+    // ViewModel for managing tasks
     private lateinit var taskViewModel: TaskViewModel
+
+    // Current task to be edited
     private lateinit var currentTask: Task
 
+    // Arguments passed to the fragment
     private val args: EditTaskFragmentArgs by navArgs()
 
+    // Creating the view for the fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Inflating the layout for this fragment
         editTaskBinding = FragmentEditTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    // After the view is created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
+        // Adding options menu
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        // Getting the ViewModel from MainActivity
         taskViewModel = (activity as MainActivity).taskViewModel
+
+        // Getting the current task to be edited from arguments
         currentTask = args.task!!
 
+        // Setting task details to EditText fields
         binding.editTaskTitle.setText(currentTask.taskTitle)
         binding.editTaskDesc.setText(currentTask.taskDesc)
 
+        // Updating task when FAB is clicked
         binding.editTaskFab.setOnClickListener{
             val taskTitle = binding.editTaskTitle.text.toString().trim()
             val taskDesc = binding.editTaskDesc.text.toString().trim()
@@ -67,11 +80,12 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
         }
     }
 
+    // Function to delete the task
     private fun deleteTask(){
         AlertDialog.Builder(activity).apply {
             setTitle("Delete Task!")
             setMessage("Do you want to delete this task?")
-            setPositiveButton("Detele"){_,_  ->
+            setPositiveButton("Delete"){_,_  ->
                 taskViewModel.deleteTask(currentTask)
                 Toast.makeText(context, "Task Deleted!", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.popBackStack(R.id.homeFragment, false)
@@ -80,20 +94,24 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task), MenuProvider {
         }.create().show()
     }
 
+    // Creating options menu for the fragment
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
         menuInflater.inflate(R.menu.menu_edit_task, menu)
     }
 
+    // Handling menu item selection
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when(menuItem.itemId){
             R.id.deleteMenu -> {
                 deleteTask()
                 true
-            }else -> false
+            }
+            else -> false
         }
     }
 
+    // Cleaning up view binding
     override fun onDestroy() {
         super.onDestroy()
         editTaskBinding = null
