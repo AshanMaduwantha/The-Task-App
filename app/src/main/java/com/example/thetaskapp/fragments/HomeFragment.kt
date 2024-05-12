@@ -23,35 +23,47 @@ import com.example.thetaskapp.viewmodel.TaskViewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener, MenuProvider {
 
+    // View binding for the fragment
     private var homeBinding: FragmentHomeBinding? = null
     private val binding get() = homeBinding!!
 
+    // ViewModel for managing tasks
     private lateinit var taskViewModel: TaskViewModel
+
+    // Adapter for displaying tasks in RecyclerView
     private lateinit var taskAdapter: TaskAdapter
 
+    // Creating the view for the fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        // Inflating the layout for this fragment
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    // After the view is created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
 
+        // Adding options menu
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        // Getting the ViewModel from MainActivity
         taskViewModel = (activity as MainActivity).taskViewModel
+
+        // Setting up RecyclerView to display tasks
         setupHomeRecycleView()
 
+        // Navigating to AddTaskFragment when FAB is clicked
         binding.addNoteFab.setOnClickListener{
             it.findNavController().navigate(R.id.action_homeFragment_to_addTaskFragment)
         }
     }
 
+    // Update UI based on task list
     private fun updateUI(task: List<Task>?){
         if(task != null){
             if(task.isNotEmpty()){
@@ -64,6 +76,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
+    // Setting up RecyclerView with adapter and layout manager
     private fun setupHomeRecycleView(){
         taskAdapter = TaskAdapter()
         binding.homeRecyclerView.apply {
@@ -72,6 +85,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             adapter = taskAdapter
         }
 
+        // Observing LiveData from ViewModel to update the task list
         activity?.let {
             taskViewModel.getALlTask().observe(viewLifecycleOwner){ task ->
                 taskAdapter.differ.submitList(task)
@@ -80,6 +94,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
+    // Searching for tasks based on query
     private fun searchTask(query: String?){
         val searchQuery = "%$query"
 
@@ -88,11 +103,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-
+    // Function called when text is submitted in the search view
     override fun onQueryTextSubmit(query: String?): Boolean {
         return false
     }
 
+    // Function called when text changes in the search view
     override fun onQueryTextChange(newText: String?): Boolean {
         if(newText != null){
             searchTask(newText)
@@ -100,20 +116,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         return true
     }
 
+    // Cleaning up view binding
     override fun onDestroy() {
         super.onDestroy()
         homeBinding = null
     }
 
+    // Creating options menu for the fragment
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
         menuInflater.inflate(R.menu.home_menu, menu)
 
+        // Configuring search view in the options menu
         val menuSearch = menu.findItem(R.id.searchMenu).actionView as SearchView
         menuSearch.isSubmitButtonEnabled = false
         menuSearch.setOnQueryTextListener(this)
     }
 
+    // Handling menu item selection
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return false
     }
