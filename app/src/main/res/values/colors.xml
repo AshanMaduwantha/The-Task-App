@@ -4,6 +4,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="PrimaryColor">#2196F3</color>
-    <color name="SecoundryColor">#A9A8A8</color>
+    <color name="SecondryColor">#A9A8A8</color>
     <color name="AccentColor">#E6E5E5</color>
 </resources>
